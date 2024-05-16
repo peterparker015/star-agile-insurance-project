@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    tools {
+      maven 'M2_HOME'
+      }
+
+    stages {
+        stage('SCM Checkout') {
+          steps {
+              echo 'Perform SCM Check-Out'
+				      echo 'Checkout the SourceCode from Github'
+				      git 'https://github.com/peterparker015/star-agile-insurance-project.git'
+            }
+        }
+        stage('Package') {
+          steps {
+            echo 'Create a package'
+            sh 'mvn clean package'
+                }
+           }
+        }
+}
