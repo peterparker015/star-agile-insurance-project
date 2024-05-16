@@ -31,5 +31,18 @@ pipeline {
 	    sh 'docker build -t sumitv15/insure-me:01 .'
 		}
 	    }
+	stage('Docker Login') {
+	  steps {
+	    echo 'Login to Dockerhub to push the images'
+	    withCredentials([usernamePassword(credentialsId: 'Dockerlogin-user', passwordVariable: 'Dockerpassword', usernameVariable: 'Dockerlogin')]) {
+            sh 'docker login -u ${env.Dockerlogin} -p ${env.Dockerpassword}
+		}
+	   }
+     }
+	stage('Push the image') {
+	  steps {
+	    sh 'docker push sumitv15/insure-me:01'
+			}
+		}
 	}
-    }
+}
